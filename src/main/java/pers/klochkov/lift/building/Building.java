@@ -5,7 +5,7 @@ import java.util.List;
 
 public final class Building {
     public final int COUNT_FLOOR;
-    public List<Floor> floors = new ArrayList();
+    public List<Floor> floors;
 
 
 
