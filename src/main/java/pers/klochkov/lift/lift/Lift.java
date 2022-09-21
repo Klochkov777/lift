@@ -3,6 +3,10 @@ package pers.klochkov.lift.lift;
 import pers.klochkov.lift.prog.Condition;
 
 public class Lift {
+
+    int numberFloor = 1;
+    private Condition condition;
+
     public Condition getCondition() {
         return condition;
     }
@@ -11,5 +15,5 @@ public class Lift {
         this.condition = condition;
     }
 
-    private Condition condition;
+
 }
