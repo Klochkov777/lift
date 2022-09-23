@@ -1,5 +1,7 @@
 package pers.klochkov.lift.building;
 
+import pers.klochkov.lift.prog.Condition;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,5 +60,25 @@ public class BuildingGenerator {
     private static int randomNumber(int min, int max) {
         max -= min;
         return (int) (Math.random() * ++max) + min;
+    }
+
+    public static void setDequeForAllFloors(Building building){
+        building.floors.stream().forEach(floor -> {setDequeUP(floor); setDequeUP(floor);});
+        building.floors.stream().forEach(floor -> {setDequeDown(floor); setDequeDown(floor);});
+    }
+
+
+
+    private static void setDequeUP(Floor floor) {
+        floor.people.stream()
+                .filter(person -> person.getCondition().equals(Condition.UP))
+                .forEach(person -> floor.dequeUP.push(person));
+
+    }
+
+    private static void setDequeDown(Floor floor) {
+        floor.people.stream()
+                .filter(person -> person.getCondition().equals(Condition.DOWN))
+                .forEach(person -> floor.dequeDown.push(person));
     }
 }
