@@ -4,6 +4,8 @@ import pers.klochkov.lift.prog.Condition;
 
 public class Person {
     private int desiredFloor;
+
+
     private int hisFloor;
     private Condition condition;
 
@@ -31,5 +33,10 @@ public class Person {
         return hisFloor;
     }
 
-
+    @Override
+    public String toString() {
+        return "[" + desiredFloor +
+                getCondition() +
+                ']';
+    }
 }

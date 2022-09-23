@@ -6,12 +6,13 @@ import pers.klochkov.lift.prog.Condition;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class LoaderLift {
     private final int maxPerson;
     private int amountPerson;
     private Loading loading;
-    List<Person> people = new ArrayList<>();
+    List<Person> peoplePeopleInsideLift = new ArrayList<>();
 
     public LoaderLift(int maxPerson) {
         this.maxPerson = maxPerson;
@@ -24,8 +25,9 @@ public class LoaderLift {
     public void setAmountPerson(int amountPerson) {
         if (amountPerson > maxPerson) throw new RuntimeException("Lift is overloaded");
         this.amountPerson = amountPerson;
-
     }
+
+
 
     public Loading getLoading() {
       if (maxPerson == amountPerson) return Loading.FULL;
@@ -33,7 +35,9 @@ public class LoaderLift {
       return Loading.NOT_FULL;
     }
 
-    public void loadLift(Floor floor){
-        if (loading == floor.co)
+    public void loadLift(Floor floor, Lift lift, Condition condition){
+//        if (condition.equals(Condition.DOWN) && floor.people.stream().findAny()){
+//
+//        }
     }
 }
