@@ -8,13 +8,21 @@ public class Lift {
     ManagerLift managerLift;
 
 
-    int numberFloor = 1;
+    public int getNumberFloor() {
+        return numberFloor;
+    }
+
+    public void setNumberFloor(int numberFloor) {
+        this.numberFloor = numberFloor;
+    }
+
+    private int numberFloor = 1;
     private Condition condition;
 
-    public Lift(LoaderLift loader, ManagerLift managerLift) {
-        this.loader = loader;
-        this.managerLift = managerLift;
-    }
+//    public Lift(LoaderLift loader, ManagerLift managerLift) {
+//        this.loader = loader;
+//        this.managerLift = managerLift;
+//    }
 
     public Condition getCondition() {
         return condition;

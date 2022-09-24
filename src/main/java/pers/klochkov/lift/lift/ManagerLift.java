@@ -17,7 +17,7 @@ public class ManagerLift {
             floors1 = floors.stream().filter(floor -> !floor.people.isEmpty()).collect(Collectors.toList());
             int differenceBetweenFloors = 0;
             for (Floor floor : floors1) {
-               int differenceBetweenFloorsNow = Math.abs(lift.numberFloor) - floor.getNumberFloor();
+               int differenceBetweenFloorsNow = Math.abs(lift.getNumberFloor()) - floor.getNumberFloor();
                 if (differenceBetweenFloorsNow < differenceBetweenFloors) {
                     differenceBetweenFloors = differenceBetweenFloorsNow;
                     result = floor;

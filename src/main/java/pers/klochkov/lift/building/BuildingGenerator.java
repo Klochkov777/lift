@@ -63,8 +63,8 @@ public class BuildingGenerator {
     }
 
     public static void setDequeForAllFloors(Building building){
-        building.floors.stream().forEach(floor -> {setDequeUP(floor); setDequeUP(floor);});
-        building.floors.stream().forEach(floor -> {setDequeDown(floor); setDequeDown(floor);});
+        building.floors.stream().forEach(floor -> {setDequeUP(floor);});
+        building.floors.stream().forEach(floor -> {setDequeDown(floor);});
     }
 
 
