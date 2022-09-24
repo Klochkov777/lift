@@ -4,7 +4,11 @@ import pers.klochkov.lift.prog.Condition;
 
 public class Lift {
 
-    LoaderLift loader;
+    public Lift(LoaderLift loader) {
+        this.loader = loader;
+    }
+
+    public LoaderLift loader;
     ManagerLift managerLift;
 
 
