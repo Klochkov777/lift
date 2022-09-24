@@ -28,5 +28,7 @@ public class App {
         }
         lift.loader.loadLift(building.floors.get(lift.getNumberFloor() - 1), lift, building);
         outPrinter.printBuilding(building.floors, lift);
+        managerLift.findClosestFloorForUnload(lift);
+        outPrinter.printBuilding(building.floors, lift);
     }
 }

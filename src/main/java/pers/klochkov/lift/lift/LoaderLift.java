@@ -8,6 +8,7 @@ import pers.klochkov.lift.prog.Condition;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class LoaderLift {
     private final int maxPerson;
@@ -53,6 +54,16 @@ public class LoaderLift {
             lift.loader.peoplePeopleInsideLift.add(personToLift);
             floor.people.remove(personToLift);
             amountPerson ++;
+        }
+    }
+
+    public void unload(PriorityQueue<Person> priorityQueue, Lift lift){
+        while (true){
+            Person person = priorityQueue.peek();
+            if (lift.getNumberFloor() == person.getDesiredFloor()){
+                lift.loader.peoplePeopleInsideLift.remove(person);
+                priorityQueue.poll();
+            }else return;
         }
     }
 }

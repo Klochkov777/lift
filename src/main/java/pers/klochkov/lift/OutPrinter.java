@@ -33,6 +33,6 @@ public class OutPrinter {
     private String printByFormatOneString(Queue<Person> queueUP, Queue<Person> queueDown, String numberFloor, int numberLift) {
         String peopleInLift = "";
         if (Integer.valueOf(numberFloor).equals(numberLift)) peopleInLift = peopleInsideLift.toString();
-       return String.format("%2s|%25s | UP %s DOWN %s\n", numberFloor, peopleInLift, queueUP, queueDown);
+       return String.format("%2s|%35s | UP %s DOWN %s\n", numberFloor, peopleInLift, queueUP, queueDown);
     }
 }

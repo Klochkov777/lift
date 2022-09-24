@@ -50,8 +50,8 @@ public class ManagerLift {
         return result;
     }
 
-    public Floor findClosestFloorForUnload(Lift lift){
-        PriorityQueue<Person> personPriorityQueue = null;
+    public void findClosestFloorForUnload(Lift lift){
+        PriorityQueue<Person> personPriorityQueue = new PriorityQueue<>();
         if (lift.getCondition().equals(Condition.UP)) {
             personPriorityQueue = new PriorityQueue<>((Person o1, Person o2) -> {
                 if (o1.getDesiredFloor() > o2.getDesiredFloor()) return 1;
@@ -72,7 +72,8 @@ public class ManagerLift {
             });
         }
         personPriorityQueue.addAll(lift.loader.peoplePeopleInsideLift);
-        i
+        lift.setNumberFloor(personPriorityQueue.peek().getDesiredFloor());
+        lift.loader.unload(personPriorityQueue, lift);
     }
 
 }
