@@ -21,7 +21,7 @@ public class Lift {
     }
 
     private int numberFloor = 1;
-    private Condition condition;
+    private Condition condition = Condition.NOT_MOVE;
 
 //    public Lift(LoaderLift loader, ManagerLift managerLift) {
 //        this.loader = loader;
