@@ -5,7 +5,6 @@ import pers.klochkov.lift.building.Person;
 import pers.klochkov.lift.prog.Condition;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -31,15 +30,16 @@ public class ManagerLift {
         }
             result = findClosestFloorWithPeopleAndLiftEmpty(floors1, lift);
         if (result == null) {
-            System.out.println("All people achieved their destination");
-            System.exit(0);  // Так будет правильно?????????????????????????????
+            System.out.println("All people achieved their points destination");
+            System.exit(0);  // it is right or wrong for normal exit from programme
         }
         lift.setNumberFloor(result.getNumberFloor());
     }
 
     private Floor findClosestFloorWithPeopleAndLiftEmpty(List<Floor> floors1, Lift lift){
         Floor result = null;
-        int differenceBetweenFloors = lift.getNumberFloor();
+        if (floors1.isEmpty()) return null;
+        int differenceBetweenFloors = Integer.MAX_VALUE;// here govno code or maybe it is possible variant
         for (Floor floor : floors1) {
             int differenceBetweenFloorsNow = Math.abs(lift.getNumberFloor() - floor.getNumberFloor());
             if (differenceBetweenFloorsNow < differenceBetweenFloors) {
@@ -50,31 +50,49 @@ public class ManagerLift {
         return result;
     }
 
-    public void findClosestFloorForUnload(Lift lift){
+    public PriorityQueue<Person> getPriorityQueuePersonInLift(Lift lift){
         PriorityQueue<Person> personPriorityQueue = new PriorityQueue<>();
         if (lift.getCondition().equals(Condition.UP)) {
-            personPriorityQueue = new PriorityQueue<>((Person o1, Person o2) -> {
-                if (o1.getDesiredFloor() > o2.getDesiredFloor()) return 1;
-                else if (o1.getDesiredFloor() < o2.getDesiredFloor()) {
-                    return -1;
-                }
-                else
-                return 0;
-            });
+            personPriorityQueue = new PriorityQueue<>(new MyComparatorFromLeast());
         } else if (lift.getCondition().equals(Condition.DOWN)){
-            personPriorityQueue = new PriorityQueue<>((Person o1, Person o2) -> {
-                if (o1.getDesiredFloor() < o2.getDesiredFloor()) return 1;
-                else if (o1.getDesiredFloor() > o2.getDesiredFloor()) {
-                    return -1;
-                }
-                else
-                    return 0;
-            });
+            personPriorityQueue = new PriorityQueue<>(new MyComparatorFromMost());
         }
         personPriorityQueue.addAll(lift.loader.peoplePeopleInsideLift);
-        lift.setNumberFloor(personPriorityQueue.peek().getDesiredFloor());
-        lift.loader.unload(personPriorityQueue, lift);
+        return personPriorityQueue;
     }
+
+    public void moveToFloorForPassenger(PriorityQueue<Person> priorityQueue, Lift lift){
+        lift.setNumberFloor(priorityQueue.peek().getDesiredFloor());
+    }
+
+    class MyComparatorFromLeast implements Comparator<Person>{
+
+        @Override
+        public int compare(Person o1, Person o2) {
+            if (o1.getDesiredFloor() > o2.getDesiredFloor()) return 1;
+            else if (o1.getDesiredFloor() < o2.getDesiredFloor()) {
+                return -1;
+            }
+            else
+                return 0;
+        }
+    }
+
+    class MyComparatorFromMost implements Comparator<Person>{
+
+        @Override
+        public int compare(Person o1, Person o2) {
+            if (o1.getDesiredFloor() < o2.getDesiredFloor()) return 1;
+            else if (o1.getDesiredFloor() > o2.getDesiredFloor()) {
+                return -1;
+            }
+            else
+                return 0;
+        }
+    }
+
+
+
 
 }
 

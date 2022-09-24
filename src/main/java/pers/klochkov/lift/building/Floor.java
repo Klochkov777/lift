@@ -4,7 +4,6 @@ import pers.klochkov.lift.prog.Condition;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Floor {
     private int numberFloor;

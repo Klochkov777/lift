@@ -3,8 +3,6 @@ package pers.klochkov.lift;
 import pers.klochkov.lift.building.Floor;
 import pers.klochkov.lift.building.Person;
 import pers.klochkov.lift.lift.Lift;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Queue;

@@ -13,6 +13,9 @@ import java.util.PriorityQueue;
 public class LoaderLift {
     private final int maxPerson;
     private int amountPerson;
+
+
+
     private Loading loading;
     public List<Person> peoplePeopleInsideLift = new ArrayList<>();
 
@@ -38,6 +41,10 @@ public class LoaderLift {
     public void loadLift(Floor floor, Lift lift, Building building){
         if (lift.getNumberFloor() == building.floors.get(building.floors.size()-1).getNumberFloor()) lift.setCondition(Condition.DOWN);
         if (lift.getNumberFloor() == building.floors.get(0).getNumberFloor()) lift.setCondition(Condition.UP);
+
+        if (lift.getCondition().equals(Condition.NOT_MOVE) && !floor.dequeUP.isEmpty()) lift.setCondition(Condition.UP);
+        else if (lift.getCondition().equals(Condition.NOT_MOVE) && !floor.dequeDown.isEmpty()) lift.setCondition(Condition.DOWN); //!!!!!!!!!!!!!!!!!!!!!!!
+
         if (lift.getCondition().equals(Condition.UP)){
             loadLiftByCondition(floor, lift, floor.dequeUP);
         }
@@ -59,11 +66,16 @@ public class LoaderLift {
 
     public void unload(PriorityQueue<Person> priorityQueue, Lift lift){
         while (true){
+            if (priorityQueue.isEmpty()) return;
             Person person = priorityQueue.peek();
             if (lift.getNumberFloor() == person.getDesiredFloor()){
                 lift.loader.peoplePeopleInsideLift.remove(person);
                 priorityQueue.poll();
+                amountPerson --;
             }else return;
         }
     }
+
+
+
 }
