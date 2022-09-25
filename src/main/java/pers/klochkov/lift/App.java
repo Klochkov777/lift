@@ -26,6 +26,7 @@ public class App {
         BuildingGenerator.setDequeForAllFloors(building);
         Lift lift = new Lift(new LoaderLift(5));
         OutPrinter outPrinter = new OutPrinter();
+        System.out.println("START");
         outPrinter.printBuilding(building.floors, lift);
 
 

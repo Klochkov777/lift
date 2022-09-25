@@ -16,7 +16,7 @@ public class ManagerLift {
     public void moveClosestFloorWithPeopleAndLiftEmpty(List<Floor> floors, Lift lift) throws IOException {
         Floor result;
         Condition condition = lift.getCondition();
-        List<Floor> floors1 = null;
+        List<Floor> floors1;
         if (condition.equals(Condition.NOT_MOVE)) {
             floors1 = floors.stream().filter(floor -> !floor.people.isEmpty()).collect(Collectors.toList());
         } else if (condition.equals(Condition.UP)){
@@ -61,11 +61,13 @@ public class ManagerLift {
         return personPriorityQueue;
     }
 
+
     public void moveToFloorForPassenger(PriorityQueue<Person> priorityQueue, Lift lift){
         lift.setNumberFloor(priorityQueue.peek().getDesiredFloor());
     }
 
-    class MyComparatorFromLeast implements Comparator<Person>{
+
+    static class MyComparatorFromLeast implements Comparator<Person>{
 
         @Override
         public int compare(Person o1, Person o2) {
@@ -78,7 +80,8 @@ public class ManagerLift {
         }
     }
 
-    class MyComparatorFromMost implements Comparator<Person>{
+
+    static class MyComparatorFromMost implements Comparator<Person>{
 
         @Override
         public int compare(Person o1, Person o2) {
@@ -90,10 +93,6 @@ public class ManagerLift {
                 return 0;
         }
     }
-
-
-
-
 }
 
 

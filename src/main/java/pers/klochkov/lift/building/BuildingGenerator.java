@@ -29,9 +29,9 @@ public class BuildingGenerator {
     // change to my own exception extended from IOException
     private static List<Person> generatePeopleForOneFloor(Building building, Floor floor, int minCountPerson, int maxCountPerson) {
         if (building.floors.isEmpty()) {
-            throw new RuntimeException();
+            throw new RuntimeException("At first must be created floors");
         }
-        List<Person> result = new ArrayList<Person>();
+        List<Person> result = new ArrayList<>();
         int countPerson = randomNumber(minCountPerson, maxCountPerson);
         for (int i = 0; i <= countPerson; i++) {
             Person person = generatePerson(building, floor);
@@ -63,8 +63,8 @@ public class BuildingGenerator {
     }
 
     public static void setDequeForAllFloors(Building building){
-        building.floors.stream().forEach(floor -> {setDequeUP(floor);});
-        building.floors.stream().forEach(floor -> {setDequeDown(floor);});
+        building.floors.forEach(BuildingGenerator::setDequeUP);
+        building.floors.forEach(BuildingGenerator::setDequeDown);
     }
 
 
