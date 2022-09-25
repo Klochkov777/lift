@@ -13,10 +13,6 @@ import java.util.PriorityQueue;
 public class LoaderLift {
     private final int maxPerson;
     private int amountPerson;
-
-
-
-    private Loading loading;
     public List<Person> peoplePeopleInsideLift = new ArrayList<>();
 
     public LoaderLift(int maxPerson) {
@@ -27,31 +23,25 @@ public class LoaderLift {
         return amountPerson;
     }
 
-    public void setAmountPerson(int amountPerson) {
-        if (amountPerson > maxPerson) throw new RuntimeException("Lift is overloaded");
-        this.amountPerson = amountPerson;
-    }
-
-    public Loading getLoading() {
-      if (maxPerson == amountPerson) return Loading.FULL;
-      if (amountPerson == 0) return Loading.EMPTY;
-      return Loading.NOT_FULL;
-    }
-
     public void loadLift(Floor floor, Lift lift, Building building){
-        if (lift.getNumberFloor() == building.floors.get(building.floors.size()-1).getNumberFloor()) lift.setCondition(Condition.DOWN);
-        if (lift.getNumberFloor() == building.floors.get(0).getNumberFloor()) lift.setCondition(Condition.UP);
-
-        if (lift.getCondition().equals(Condition.NOT_MOVE) && !floor.dequeUP.isEmpty()) lift.setCondition(Condition.UP);
-        else if (lift.getCondition().equals(Condition.NOT_MOVE) && !floor.dequeDown.isEmpty()) lift.setCondition(Condition.DOWN); //!!!!!!!!!!!!!!!!!!!!!!!
-
+        Condition conditionForLift = getConditionForLift(floor, lift, building);
+        lift.setCondition(conditionForLift);
         if (lift.getCondition().equals(Condition.UP)){
             loadLiftByCondition(floor, lift, floor.dequeUP);
         }
         if (lift.getCondition().equals(Condition.DOWN)){
             loadLiftByCondition(floor, lift, floor.dequeDown);
         }
+    }
 
+    private Condition getConditionForLift(Floor floor, Lift lift, Building building){
+        int numberLastFloor = building.floors.get(building.floors.size()-1).getNumberFloor();
+        int numberFirstFloor = building.floors.get(0).getNumberFloor();
+        if (lift.getNumberFloor() == numberLastFloor) return  Condition.DOWN;
+        if (lift.getNumberFloor() == numberFirstFloor)return Condition.UP;
+        if (lift.getCondition().equals(Condition.NOT_MOVE) && !floor.dequeUP.isEmpty()) return Condition.UP;
+        else if (lift.getCondition().equals(Condition.NOT_MOVE) && !floor.dequeDown.isEmpty()) return  Condition.DOWN;
+        return lift.getCondition();
     }
 
     private void loadLiftByCondition(Floor floor, Lift lift, Deque<Person> dequeUpOrDown){
@@ -65,8 +55,7 @@ public class LoaderLift {
     }
 
     public void unload(PriorityQueue<Person> priorityQueue, Lift lift){
-        while (true){
-            if (priorityQueue.isEmpty()) return;
+        while (!priorityQueue.isEmpty()){
             Person person = priorityQueue.peek();
             if (lift.getNumberFloor() == person.getDesiredFloor()){
                 lift.loader.peoplePeopleInsideLift.remove(person);

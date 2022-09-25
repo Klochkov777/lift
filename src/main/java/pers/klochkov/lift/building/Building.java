@@ -8,6 +8,5 @@ public final class Building {
     public List<Floor> floors;
     public Building(int COUNT_FLOOR) {
         this.COUNT_FLOOR = COUNT_FLOOR;
-
     }
 }

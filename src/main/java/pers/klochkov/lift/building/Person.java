@@ -4,10 +4,7 @@ import pers.klochkov.lift.prog.Condition;
 
 public class Person {
     private int desiredFloor;
-
-
     private int hisFloor;
-    private Condition condition;
 
     public Condition getCondition() {
         if (desiredFloor > hisFloor) {
@@ -15,7 +12,6 @@ public class Person {
         }
         return Condition.DOWN;
     }
-
 
     public int getDesiredFloor() {
         return desiredFloor;

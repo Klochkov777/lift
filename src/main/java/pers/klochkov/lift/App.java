@@ -45,21 +45,13 @@ public class App {
                     if (floor == null) break;
                 }
             }
-
-//            lift.loader.loadLift(building.floors.get(lift.getNumberFloor() - 1), lift, building);
-//            outPrinter.printBuilding(building.floors, lift);
-
-           peopleInLift = managerLift.getPriorityQueuePersonInLift(lift);
-
-            //moveToFloorOnTheWay(peopleInLift, lift, building.floors, building, outPrinter);
-
+            peopleInLift = managerLift.getPriorityQueuePersonInLift(lift);
             managerLift.moveToFloorForPassenger(peopleInLift, lift);
             lift.loader.unload(peopleInLift, lift);
             lift.loader.loadLift(building.floors.get(lift.getNumberFloor() - 1), lift, building);//?????????
             outPrinter.printBuilding(building.floors, lift);
         }
     }
-
 
 
     private static Floor moveToFloorOnTheWay(PriorityQueue<Person> priorityQueue, Lift lift, List<Floor> floors, Building building, OutPrinter outPrinter) {
@@ -74,8 +66,10 @@ public class App {
                     .filter(floor -> (floor.getNumberFloor() > priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() < lift.getNumberFloor()))
                     .collect(Collectors.toList());
             Collections.reverse(floors);
-        } else {System.out.println("null"); return null;
-            }
+        } else {
+            System.out.println("null");
+            return null;
+        }
         if (floors.isEmpty()) return null;
         lift.setNumberFloor(floors.get(0).getNumberFloor());
         lift.loader.loadLift(floors.get(0), lift, building);
