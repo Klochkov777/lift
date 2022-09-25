@@ -9,7 +9,6 @@ public class Lift {
     }
 
     public LoaderLift loader;
-    ManagerLift managerLift;
 
 
     public int getNumberFloor() {
