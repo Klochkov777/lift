@@ -1,13 +1,13 @@
 package pers.klochkov.lift.lift;
 
+import pers.klochkov.lift.OutPrinter;
+import pers.klochkov.lift.building.Building;
 import pers.klochkov.lift.building.Floor;
 import pers.klochkov.lift.building.Person;
 import pers.klochkov.lift.prog.Condition;
 
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -53,6 +53,37 @@ public class ManagerLift {
 
     public void moveToFloorForPassenger(PriorityQueue<Person> priorityQueue, Lift lift){
         lift.setNumberFloor(priorityQueue.peek().getDesiredFloor());
+    }
+
+    public void moveToFloorOnTheWay(Building building, Lift lift, PriorityQueue<Person> peopleInLift, OutPrinter outPrinter){
+        while (true) {
+            if (lift.loader.getAmountPerson() == lift.loader.maxPerson) break;
+            Floor floor = findFloorOnTheWay(peopleInLift, lift, building.floors, building, outPrinter);
+            if (floor == null) break;
+            lift.setNumberFloor(floor.getNumberFloor());
+            lift.loader.loadLift(floor, lift, building);
+            outPrinter.printBuilding(building.floors, lift);
+        }
+    }
+
+
+    private Floor findFloorOnTheWay(PriorityQueue<Person> priorityQueue, Lift lift, List<Floor> floors, Building building, OutPrinter outPrinter) {
+        //List<Floor> floors1 = new ArrayList<>(floors);
+        if (lift.getCondition().equals(Condition.UP)) {
+            floors = floors.stream()
+                    .filter(floor -> (floor.getNumberFloor() < priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() > lift.getNumberFloor()))
+                    .collect(Collectors.toList());
+        } else if (lift.getCondition().equals(Condition.DOWN)) {
+
+            floors = floors.stream()
+                    .filter(floor -> (floor.getNumberFloor() > priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() < lift.getNumberFloor()))
+                    .collect(Collectors.toList());
+            Collections.reverse(floors);
+        } else {
+            return null;
+        }
+        if (floors.isEmpty()) return null;
+        return floors.get(0);
     }
 
 

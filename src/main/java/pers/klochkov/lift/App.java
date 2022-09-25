@@ -36,72 +36,18 @@ public class App {
                 lift.setCondition(Condition.NOT_MOVE);
                 managerLift.moveClosestFloorWithPeopleWhenLiftEmpty(building.floors, lift);
             }
-            lift.loader.loadLift(building.floors.get(lift.getNumberFloor() - 1), lift, building);//////////////
-            outPrinter.printBuilding(building.floors, lift);////////////
+            lift.loader.loadLift(building.floors.get(lift.getNumberFloor() - 1), lift, building);
+            outPrinter.printBuilding(building.floors, lift);
             PriorityQueue<Person> peopleInLift = managerLift.getPriorityQueuePersonInLift(lift);
-            if (lift.loader.getAmountPerson() != 5) {
-                while (true) {
-                    if (lift.loader.getAmountPerson() == lift.loader.maxPerson) break;
-                    Floor floor = findFloorOnTheWay(peopleInLift, lift, building.floors, building, outPrinter);
-                    if (floor == null) break;
-                    lift.setNumberFloor(floor.getNumberFloor());
-                    lift.loader.loadLift(floor, lift, building);
-                    outPrinter.printBuilding(building.floors, lift);
-                }
+            if (lift.loader.getAmountPerson() != lift.loader.maxPerson) {
+                managerLift.moveToFloorOnTheWay(building, lift, peopleInLift, outPrinter);
             }
             peopleInLift = managerLift.getPriorityQueuePersonInLift(lift);
             managerLift.moveToFloorForPassenger(peopleInLift, lift);
             lift.loader.unload(peopleInLift, lift);
-            lift.loader.loadLift(building.floors.get(lift.getNumberFloor() - 1), lift, building);//?????????
+            lift.loader.loadLift(building.floors.get(lift.getNumberFloor() - 1), lift, building);
             outPrinter.printBuilding(building.floors, lift);
         }
-    }
-
-
-//    private static Floor moveToFloorOnTheWay(PriorityQueue<Person> priorityQueue, Lift lift, List<Floor> floors, Building building, OutPrinter outPrinter) {
-//        List<Floor> floors1 = new ArrayList<>(floors);
-//        if (lift.getCondition().equals(Condition.UP)) {
-//            floors = floors.stream()
-//                    .filter(floor -> (floor.getNumberFloor() < priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() > lift.getNumberFloor()))
-//                    .collect(Collectors.toList());
-//        } else if (lift.getCondition().equals(Condition.DOWN)) {
-//            floors = floors.stream()
-//                    .filter(floor -> (floor.getNumberFloor() > priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() < lift.getNumberFloor()))
-//                    .collect(Collectors.toList());
-//            Collections.reverse(floors);
-//        } else {
-//            return null;
-//        }
-//        if (floors.isEmpty()) return null;
-//        lift.setNumberFloor(floors.get(0).getNumberFloor());
-//        lift.loader.loadLift(floors.get(0), lift, building);
-//        outPrinter.printBuilding(floors1, lift);
-//        return floors.get(0);
-//
-//    }
-
-    private static void moveToFloorOnTheWay(){
-
-    }
-
-
-    private static Floor findFloorOnTheWay(PriorityQueue<Person> priorityQueue, Lift lift, List<Floor> floors, Building building, OutPrinter outPrinter) {
-        List<Floor> floors1 = new ArrayList<>(floors);
-        if (lift.getCondition().equals(Condition.UP)) {
-            floors = floors.stream()
-                    .filter(floor -> (floor.getNumberFloor() < priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() > lift.getNumberFloor()))
-                    .collect(Collectors.toList());
-        } else if (lift.getCondition().equals(Condition.DOWN)) {
-
-            floors = floors.stream()
-                    .filter(floor -> (floor.getNumberFloor() > priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() < lift.getNumberFloor()))
-                    .collect(Collectors.toList());
-            Collections.reverse(floors);
-        } else {
-            return null;
-        }
-        if (floors.isEmpty()) return null;
-        return floors.get(0);
     }
 
 }
