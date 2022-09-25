@@ -34,7 +34,7 @@ public class App {
         while (true) {
             if (lift.loader.peoplePeopleInsideLift.isEmpty()) {
                 lift.setCondition(Condition.NOT_MOVE);
-                managerLift.moveClosestFloorWithPeopleAndLiftEmpty(building.floors, lift);
+                managerLift.moveClosestFloorWithPeopleWhenLiftEmpty(building.floors, lift);
             }
             lift.loader.loadLift(building.floors.get(lift.getNumberFloor() - 1), lift, building);//////////////
             outPrinter.printBuilding(building.floors, lift);////////////

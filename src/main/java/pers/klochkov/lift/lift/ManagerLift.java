@@ -13,25 +13,14 @@ import java.util.stream.Collectors;
 
 public class ManagerLift {
 
-    public void moveClosestFloorWithPeopleAndLiftEmpty(List<Floor> floors, Lift lift) throws IOException {
+    public void moveClosestFloorWithPeopleWhenLiftEmpty(List<Floor> floors, Lift lift) throws IOException {
         Floor result;
-        Condition condition = lift.getCondition();
         List<Floor> floors1;
-        if (condition.equals(Condition.NOT_MOVE)) {
             floors1 = floors.stream().filter(floor -> !floor.people.isEmpty()).collect(Collectors.toList());
-        } else if (condition.equals(Condition.UP)){
-            floors1 = floors.stream()
-                    .filter(floor -> (!floor.dequeUP.isEmpty() && lift.getNumberFloor() < floor.getNumberFloor()))
-                    .collect(Collectors.toList());
-        } else{
-            floors1 = floors.stream()
-                    .filter(floor -> (!floor.dequeDown.isEmpty() && lift.getNumberFloor() > floor.getNumberFloor()))
-                    .collect(Collectors.toList());
-        }
             result = findClosestFloorWithPeopleAndLiftEmpty(floors1, lift);
         if (result == null) {
             System.out.println("All people achieved their points destination");
-            System.exit(0);  // it is right or wrong for normal exit from programme
+            System.exit(0);  // it is right or wrong for normal exit from programme. It is easy set it to main but is it necessarily
         }
         lift.setNumberFloor(result.getNumberFloor());
     }
