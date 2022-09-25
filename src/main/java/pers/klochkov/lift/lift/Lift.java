@@ -1,14 +1,17 @@
 package pers.klochkov.lift.lift;
 
 import pers.klochkov.lift.prog.Condition;
+import pers.klochkov.lift.reader.PropertiesLiftReader;
 
 public class Lift {
     public LoaderLift loader;
-    private int numberFloor = 1;
+    private int numberFloor;
     private Condition condition = Condition.NOT_MOVE;
 
     public Lift(LoaderLift loader) {
         this.loader = loader;
+        PropertiesLiftReader propertiesLift = new PropertiesLiftReader();
+        numberFloor = propertiesLift.getStartFloor();
     }
 
     public int getNumberFloor() {

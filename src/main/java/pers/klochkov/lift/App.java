@@ -3,34 +3,40 @@ package pers.klochkov.lift;
 
 import pers.klochkov.lift.building.BuildingGenerator;
 import pers.klochkov.lift.building.Building;
-import pers.klochkov.lift.building.Floor;
 import pers.klochkov.lift.building.Person;
 import pers.klochkov.lift.lift.Lift;
 import pers.klochkov.lift.lift.LoaderLift;
 import pers.klochkov.lift.lift.ManagerLift;
 import pers.klochkov.lift.prog.Condition;
+import pers.klochkov.lift.reader.PropertiesBuildingReader;
+import pers.klochkov.lift.reader.PropertiesFloorReader;
+import pers.klochkov.lift.reader.PropertiesLiftReader;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.PriorityQueue;
-import java.util.stream.Collectors;
+
 
 public class App {
     public static void main(String[] args) throws IOException {
-        Building building = BuildingGenerator.generateBuildingByChance(10, 12);
+        PropertiesBuildingReader propertiesBuild = new PropertiesBuildingReader();
+        int maxFloor = propertiesBuild.getMaxFloor();
+        int minFloor = propertiesBuild.getMinFloor();
+        Building building = BuildingGenerator.generateBuildingByChance(minFloor, maxFloor);
         building.floors = BuildingGenerator.generateFloors(building);
-        BuildingGenerator.setPeopleToFloors(building, 0, 10);
+        PropertiesFloorReader propertiesFloor = new PropertiesFloorReader();
+        int minPeople = propertiesFloor.getMinPeople();
+        int maxPeople = propertiesFloor.getMaxPeople();
+        BuildingGenerator.setPeopleToFloors(building, minPeople, maxPeople);
         BuildingGenerator.setDequeForAllFloors(building);
-        Lift lift = new Lift(new LoaderLift(5));
+        PropertiesLiftReader propertiesLift = new PropertiesLiftReader();
+        int maxPersonInLift = propertiesLift.getMaxPerson();
+        Lift lift = new Lift(new LoaderLift(maxPersonInLift));
+        ManagerLift managerLift = new ManagerLift();
         OutPrinter outPrinter = new OutPrinter();
+
         System.out.println("START");
         outPrinter.printBuilding(building.floors, lift);
-
-
-        ManagerLift managerLift = new ManagerLift();
         while (true) {
             if (lift.loader.peoplePeopleInsideLift.isEmpty()) {
                 lift.setCondition(Condition.NOT_MOVE);

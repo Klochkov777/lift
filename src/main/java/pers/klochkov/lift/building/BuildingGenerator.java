@@ -12,7 +12,7 @@ public class BuildingGenerator {
 
     public static List<Floor> generateFloors(Building building) {
         List<Floor> result = new ArrayList<Floor>();
-        for (int i = 1; i <= building.COUNT_FLOOR; i++) {
+        for (int i = 1; i <= building.AMOUNT_FLOOR; i++) {
             Floor floor = new Floor(i);
             result.add(floor);
         }

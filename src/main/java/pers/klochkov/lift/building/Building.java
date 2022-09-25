@@ -1,12 +1,14 @@
 package pers.klochkov.lift.building;
 
-import java.util.ArrayList;
+import pers.klochkov.lift.reader.PropertiesBuildingReader;
+
 import java.util.List;
 
 public final class Building {
-    public final int COUNT_FLOOR;
+    public final int AMOUNT_FLOOR;
     public List<Floor> floors;
-    public Building(int COUNT_FLOOR) {
-        this.COUNT_FLOOR = COUNT_FLOOR;
+    public Building(int AMOUNT_FLOOR) {
+       this.AMOUNT_FLOOR = AMOUNT_FLOOR;
     }
 }
+
