@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class LoaderLift {
-    private final int maxPerson;
+    public final int maxPerson;
     private int amountPerson;
     public List<Person> peoplePeopleInsideLift = new ArrayList<>();
 

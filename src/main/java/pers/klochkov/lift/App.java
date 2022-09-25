@@ -41,8 +41,12 @@ public class App {
             PriorityQueue<Person> peopleInLift = managerLift.getPriorityQueuePersonInLift(lift);
             if (lift.loader.getAmountPerson() != 5) {
                 while (true) {
-                    Floor floor = moveToFloorOnTheWay(peopleInLift, lift, building.floors, building, outPrinter);
+                    if (lift.loader.getAmountPerson() == lift.loader.maxPerson) break;
+                    Floor floor = findFloorOnTheWay(peopleInLift, lift, building.floors, building, outPrinter);
                     if (floor == null) break;
+                    lift.setNumberFloor(floor.getNumberFloor());
+                    lift.loader.loadLift(floor, lift, building);
+                    outPrinter.printBuilding(building.floors, lift);
                 }
             }
             peopleInLift = managerLift.getPriorityQueuePersonInLift(lift);
@@ -54,30 +58,50 @@ public class App {
     }
 
 
-    private static Floor moveToFloorOnTheWay(PriorityQueue<Person> priorityQueue, Lift lift, List<Floor> floors, Building building, OutPrinter outPrinter) {
-        System.out.println("Enter");
+//    private static Floor moveToFloorOnTheWay(PriorityQueue<Person> priorityQueue, Lift lift, List<Floor> floors, Building building, OutPrinter outPrinter) {
+//        List<Floor> floors1 = new ArrayList<>(floors);
+//        if (lift.getCondition().equals(Condition.UP)) {
+//            floors = floors.stream()
+//                    .filter(floor -> (floor.getNumberFloor() < priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() > lift.getNumberFloor()))
+//                    .collect(Collectors.toList());
+//        } else if (lift.getCondition().equals(Condition.DOWN)) {
+//            floors = floors.stream()
+//                    .filter(floor -> (floor.getNumberFloor() > priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() < lift.getNumberFloor()))
+//                    .collect(Collectors.toList());
+//            Collections.reverse(floors);
+//        } else {
+//            return null;
+//        }
+//        if (floors.isEmpty()) return null;
+//        lift.setNumberFloor(floors.get(0).getNumberFloor());
+//        lift.loader.loadLift(floors.get(0), lift, building);
+//        outPrinter.printBuilding(floors1, lift);
+//        return floors.get(0);
+//
+//    }
+
+    private static void moveToFloorOnTheWay(){
+
+    }
+
+
+    private static Floor findFloorOnTheWay(PriorityQueue<Person> priorityQueue, Lift lift, List<Floor> floors, Building building, OutPrinter outPrinter) {
         List<Floor> floors1 = new ArrayList<>(floors);
         if (lift.getCondition().equals(Condition.UP)) {
             floors = floors.stream()
                     .filter(floor -> (floor.getNumberFloor() < priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() > lift.getNumberFloor()))
                     .collect(Collectors.toList());
         } else if (lift.getCondition().equals(Condition.DOWN)) {
+
             floors = floors.stream()
                     .filter(floor -> (floor.getNumberFloor() > priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() < lift.getNumberFloor()))
                     .collect(Collectors.toList());
             Collections.reverse(floors);
         } else {
-            System.out.println("null");
             return null;
         }
         if (floors.isEmpty()) return null;
-        lift.setNumberFloor(floors.get(0).getNumberFloor());
-        lift.loader.loadLift(floors.get(0), lift, building);
-        outPrinter.printBuilding(floors1, lift);
-        System.out.println("Exit");
         return floors.get(0);
-
     }
-
 
 }
