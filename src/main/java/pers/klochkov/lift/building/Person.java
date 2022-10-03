@@ -2,15 +2,14 @@ package pers.klochkov.lift.building;
 
 import pers.klochkov.lift.prog.Condition;
 
+import static pers.klochkov.lift.prog.Condition.*;
+
 public class Person {
     private int desiredFloor;
     private int hisFloor;
 
     public Condition getCondition() {
-        if (desiredFloor > hisFloor) {
-            return Condition.UP;
-        }
-        return Condition.DOWN;
+        return desiredFloor > hisFloor ? UP : DOWN;
     }
 
     public int getDesiredFloor() {
