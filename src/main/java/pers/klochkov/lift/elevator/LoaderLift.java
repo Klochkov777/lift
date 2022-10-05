@@ -8,12 +8,11 @@ import pers.klochkov.lift.reader.PropertiesLiftReader;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.PriorityQueue;
-import static pers.klochkov.lift.prog.Condition.*;
+import static pers.klochkov.lift.elevator.Condition.*;
 
 public class LoaderLift {
     public final int maxPerson;
     private int amountPerson;
-    //private List<Person> peopleInsideLift = new ArrayList<>();
     private PriorityQueue<Person> priorityQueue = new PriorityQueue<>();
     private Lift lift;
 

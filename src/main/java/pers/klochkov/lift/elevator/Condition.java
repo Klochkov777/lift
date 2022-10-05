@@ -1,4 +1,4 @@
-package pers.klochkov.lift.prog;
+package pers.klochkov.lift.elevator;
 
 public enum Condition {
     UP,

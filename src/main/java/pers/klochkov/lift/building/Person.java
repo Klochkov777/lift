@@ -1,8 +1,8 @@
 package pers.klochkov.lift.building;
 
-import pers.klochkov.lift.prog.Condition;
+import pers.klochkov.lift.elevator.Condition;
 
-import static pers.klochkov.lift.prog.Condition.*;
+import static pers.klochkov.lift.elevator.Condition.*;
 
 public class Person {
     private int desiredFloor;

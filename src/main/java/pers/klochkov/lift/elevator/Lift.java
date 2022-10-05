@@ -2,11 +2,9 @@ package pers.klochkov.lift.elevator;
 
 import pers.klochkov.lift.building.Building;
 import pers.klochkov.lift.building.Floor;
-import pers.klochkov.lift.prog.Condition;
 import pers.klochkov.lift.reader.PropertiesLiftReader;
-
-import static pers.klochkov.lift.prog.Condition.*;
-import static pers.klochkov.lift.prog.Condition.DOWN;
+import static pers.klochkov.lift.elevator.Condition.*;
+import static pers.klochkov.lift.elevator.Condition.DOWN;
 
 public class Lift {
     private LoaderLift loader;

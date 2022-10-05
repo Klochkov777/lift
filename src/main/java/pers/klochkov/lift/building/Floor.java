@@ -1,5 +1,5 @@
 package pers.klochkov.lift.building;
-import pers.klochkov.lift.prog.Condition;
+import pers.klochkov.lift.elevator.Condition;
 import pers.klochkov.lift.reader.PropertiesFloorReader;
 import java.util.*;
 

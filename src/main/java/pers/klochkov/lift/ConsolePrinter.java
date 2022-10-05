@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
-public class OutPrinter {
+public class ConsolePrinter {
 
     Building building;
 
-    public OutPrinter(Building building) {
+    public ConsolePrinter(Building building) {
         this.building = building;
     }
 

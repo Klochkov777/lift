@@ -2,13 +2,12 @@ package pers.klochkov.lift.elevator;
 
 import pers.klochkov.lift.building.Floor;
 import pers.klochkov.lift.building.Person;
-import pers.klochkov.lift.prog.Condition;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static pers.klochkov.lift.prog.Condition.UP;
+import static pers.klochkov.lift.elevator.Condition.UP;
 
 
 public class ManagerLift {
@@ -43,7 +42,7 @@ public class ManagerLift {
     }
 
 
-    public Floor findFloorOnTheWay() {
+    public Floor findFloorForPickUp () {
         List<Floor> floors = lift.building.getFloors();
         PriorityQueue<Person> priorityQueue = lift.getLoader().getPriorityQueue();
         if (lift.getCondition()== UP) {
