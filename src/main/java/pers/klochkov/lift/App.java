@@ -2,6 +2,7 @@ package pers.klochkov.lift;
 
 
 import pers.klochkov.lift.building.Building;
+import pers.klochkov.lift.building.Floor;
 import pers.klochkov.lift.building.Person;
 import pers.klochkov.lift.elevator.Lift;
 import pers.klochkov.lift.elevator.LoaderLift;
@@ -18,20 +19,38 @@ import java.util.PriorityQueue;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        PropertiesBuildingReader propertiesBuild = new PropertiesBuildingReader();
-        int maxFloor = propertiesBuild.getMaxFloor();
-        int minFloor = propertiesBuild.getMinFloor();
-        Building building = BuildingGenerator.generateBuildingByChance(minFloor, maxFloor);
-        building.floors = BuildingGenerator.generateFloors(building);
-        PropertiesFloorReader propertiesFloor = new PropertiesFloorReader();
-        int minPeople = propertiesFloor.getMinPeople();
-        int maxPeople = propertiesFloor.getMaxPeople();
-        BuildingGenerator.setPeopleToFloors(building, minPeople, maxPeople);
-        BuildingGenerator.setDequeForAllFloors(building);
-        PropertiesLiftReader propertiesLift = new PropertiesLiftReader();
-        Lift lift = new Lift(new LoaderLift(maxPersonInLift));
-        //ManagerLift managerLift = new ManagerLift();
-        OutPrinter outPrinter = new OutPrinter();
+        Building building = new Building();
+        OutPrinter outPrinter = new OutPrinter(building);
+        Lift lift = building.getLift();
+        LoaderLift loaderLift = lift.getLoader();
+        ManagerLift managerLift = lift.getManagerLift();
+
+
+        while (true) {
+            if (loaderLift.getPriorityQueue().isEmpty()) {
+                lift.setCondition(Condition.NOT_MOVE);
+                Floor floor = managerLift.findClosestFloorWithPeopleWhenLiftEmpty();
+                if (floor == null){
+                    System.out.println("All people achieved their points destination");
+                    return;
+                }
+                lift.setNumberFloor(floor.getNumberFloor());
+                outPrinter.printBuilding();
+                lift.setCondition(lift.getConditionForLift());
+//                loaderLift.loadLift();
+//                outPrinter.printBuilding();
+            }
+            loaderLift.loadLift();
+            outPrinter.printBuilding();
+            if (loaderLift.getAmountPerson() != loaderLift.maxPerson){
+                while (loaderLift.getAmountPerson() != loaderLift.maxPerson){
+                    Floor floor = managerLift.findFloorOnTheWay();
+                    if (floor == null) break;
+                    lift.setNumberFloor(floor.getNumberFloor());
+                    lift.getLoader().loadLift();
+                    outPrinter.printBuilding();
+                }
+            }
 
 //        System.out.println("START");
 //        outPrinter.printBuilding(building.floors, lift);
@@ -52,6 +71,7 @@ public class App {
 //            lift.loader.loadLift(building.floors.get(lift.getNumberFloor() - 1), lift, building);
 //            outPrinter.printBuilding(building.floors, lift);
 //        }
-    }
+        }
 
+    }
 }

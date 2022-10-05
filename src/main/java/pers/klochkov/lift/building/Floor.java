@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Floor {
     private final int numberFloor;
-    public List<Person> people;
+    public List<Person> people = new ArrayList<>();
     public Deque<Person> dequeUP = new ArrayDeque<>();
     public Deque<Person> dequeDown = new ArrayDeque<>();
     int minPeople;

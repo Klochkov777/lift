@@ -1,5 +1,6 @@
 package pers.klochkov.lift.building;
 
+import pers.klochkov.lift.elevator.Lift;
 import pers.klochkov.lift.reader.PropertiesBuildingReader;
 
 
@@ -9,6 +10,10 @@ import java.util.List;
 public final class Building {
     private final int amountFloors;
     private List<Floor> floors;
+    private final int numberFirsFloor;
+    private final int numberLastFloor;
+    private Lift lift;
+
 
     public Building() {
         PropertiesBuildingReader propertiesBuildingReader = new PropertiesBuildingReader();/////7&&&&&&&&&&&&
@@ -17,6 +22,9 @@ public final class Building {
         amountFloors = randomNumber(minFloors, maxFloors);
         floors = generateFloors();
         setPeopleToFloors();
+        numberFirsFloor = floors.get(0).getNumberFloor();
+        numberLastFloor = floors.get(floors.size() - 1).getNumberFloor();
+        lift = new Lift(this);
     }
 
 
@@ -38,6 +46,22 @@ public final class Building {
         int minDesiredFloor = floors.get(0).getNumberFloor();
         int maxDesiredFloor = amountFloors;
         floors.forEach(floor -> floor.generatePeopleForOneFloor(minDesiredFloor, maxDesiredFloor));
+    }
+
+    public List<Floor> getFloors() {
+        return floors;
+    }
+
+    public int getNumberFirsFloor() {
+        return numberFirsFloor;
+    }
+
+    public int getNumberLastFloor() {
+        return numberLastFloor;
+    }
+
+    public Lift getLift() {
+        return lift;
     }
 }
 
