@@ -56,7 +56,7 @@ public class LoaderLift {
         }
     }
 
-    public void unload(PriorityQueue<Person> priorityQueue){
+    public void unload(){
         while (!priorityQueue.isEmpty()){
             Person person = priorityQueue.peek();
             if (lift.getNumberFloor() == person.getDesiredFloor()){
