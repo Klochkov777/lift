@@ -14,9 +14,10 @@ public final class Building {
     private final int numberLastFloor;
     private Lift lift;
 
-
+    //Получился большой конструктор, который не слишком гибкий возможно (может я и не прав). Насколько это неправильно? Или он норм?
+    //Его написание сильно сократило код в других частях.
     public Building() {
-        PropertiesBuildingReader propertiesBuildingReader = new PropertiesBuildingReader();/////7&&&&&&&&&&&&
+        PropertiesBuildingReader propertiesBuildingReader = new PropertiesBuildingReader();
         int maxFloors = propertiesBuildingReader.getMaxFloor();
         int minFloors = propertiesBuildingReader.getMinFloor();
         amountFloors = randomNumber(minFloors, maxFloors);

@@ -13,7 +13,7 @@ import static pers.klochkov.lift.elevator.Condition.*;
 public class LoaderLift {
     public final int maxPerson;
     private int amountPerson;
-    private PriorityQueue<Person> priorityQueue = new PriorityQueue<>();
+    private PriorityQueue<Person> passengers = new PriorityQueue<>();
     private Lift lift;
 
     public LoaderLift(Lift lift) {
@@ -29,18 +29,18 @@ public class LoaderLift {
     public void loadLift(){
         Floor floor = lift.getFloor();
         if (lift.getCondition() == UP){
-            priorityQueue = getQueueInsideLift((Comparator.comparing(Person::getDesiredFloor)));
+            passengers = getQueueInsideLift((Comparator.comparing(Person::getDesiredFloor)));
             loadLiftByCondition(floor, floor.dequeUP);
         }
         if (lift.getCondition() == DOWN){
-            priorityQueue = getQueueInsideLift(Comparator.comparing(Person::getDesiredFloor).reversed());
+            passengers = getQueueInsideLift(Comparator.comparing(Person::getDesiredFloor).reversed());
             loadLiftByCondition(floor, floor.dequeDown);
         }
     }
 
     private PriorityQueue<Person> getQueueInsideLift (Comparator<Person> comparator){
         PriorityQueue<Person> priorityQueue1 = new PriorityQueue<>(comparator);
-        priorityQueue1.addAll(priorityQueue);
+        priorityQueue1.addAll(passengers);
         return priorityQueue1;
 
     }
@@ -49,24 +49,24 @@ public class LoaderLift {
         while (!deque.isEmpty()){
             if (amountPerson == 5) return;
             Person personToLift = deque.remove();
-            priorityQueue.add(personToLift);
+            passengers.add(personToLift);
             floor.people.remove(personToLift);
             amountPerson++;
         }
     }
 
     public void unload(){
-        while (!priorityQueue.isEmpty()){
-            Person person = priorityQueue.peek();
+        while (!passengers.isEmpty()){
+            Person person = passengers.peek();
             if (lift.getNumberFloor() == person.getDesiredFloor()){
-                priorityQueue.poll();
+                passengers.poll();
                 amountPerson--;
             }else return;
         }
     }
 
 
-    public PriorityQueue<Person> getPriorityQueue() {
-        return priorityQueue;
+    public PriorityQueue<Person> getPassengers() {
+        return passengers;
     }
 }

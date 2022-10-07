@@ -3,6 +3,11 @@ import pers.klochkov.lift.elevator.Condition;
 import pers.klochkov.lift.reader.PropertiesFloorReader;
 import java.util.*;
 
+//В задании сказано что
+//На каждом этаже k количество пассажиров, где k - случайное число генерируемое при старте программы в диапазоне 0 <= k <= 10.
+//Для меня не было понятно для каждого этажа генерируется случайное число или генерируется случ число и устанавливается для каждого этажа
+//Я сделал что для каждого этажа отдельно генерируется отдельное случайное число.
+
 public class Floor {
     private final int numberFloor;
     public List<Person> people = new ArrayList<>();

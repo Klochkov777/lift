@@ -20,9 +20,9 @@ public class App {
         ManagerLift managerLift = lift.getManagerLift();
 
         while (true) {
-            if (loaderLift.getPriorityQueue().isEmpty()) {
+            if (loaderLift.getPassengers().isEmpty()) {
                 lift.setCondition(Condition.NOT_MOVE);
-                Floor floor = managerLift.findClosestFloorWithPeopleWhenLiftEmpty();
+                Floor floor = managerLift.getClosestFloorLiftEmpty();
                 if (floor == null) {
                     System.out.println("All people achieved their points destination");
                     return;

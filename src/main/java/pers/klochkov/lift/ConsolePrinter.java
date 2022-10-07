@@ -37,7 +37,7 @@ public class ConsolePrinter {
 
     private String printByFormatOneString(Queue<Person> queueUP, Queue<Person> queueDown, String numberFloor, int numberLift) {
         String peopleInLift = "";
-        if (Integer.valueOf(numberFloor).equals(numberLift)) peopleInLift = building.getLift().getLoader().getPriorityQueue().toString();
+        if (Integer.valueOf(numberFloor).equals(numberLift)) peopleInLift = building.getLift().getLoader().getPassengers().toString();
        return String.format("%2s|%35s | UP %s DOWN %s\n", numberFloor, peopleInLift, queueUP, queueDown);
     }
 }

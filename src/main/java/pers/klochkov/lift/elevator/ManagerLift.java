@@ -3,7 +3,6 @@ package pers.klochkov.lift.elevator;
 import pers.klochkov.lift.building.Floor;
 import pers.klochkov.lift.building.Person;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,7 +17,8 @@ public class ManagerLift {
     this.lift = lift;
     }
 
-    public Floor findClosestFloorWithPeopleWhenLiftEmpty() throws IOException {
+    //метод получения ближайшего этажа с ожидающими пассажирами при пустом лифте
+    public Floor getClosestFloorLiftEmpty() {
         List<Floor> floors = lift.building.getFloors();
         Floor result;
         List<Floor> floors1;
@@ -27,6 +27,7 @@ public class ManagerLift {
         return result;
     }
 
+    //метод нахождения ближайшего этажа с ожидающими пассажирами при пустом лифте (он необходим для getClosestFloorLiftEmpty())
     private Floor findClosestFloorWhenLiftEmpty(List<Floor> floors1, Lift lift){
         Floor result = null;
         if (floors1.isEmpty()) return null;
@@ -41,17 +42,19 @@ public class ManagerLift {
         return result;
     }
 
-
+//Этот метод для получения этажа на котором лифт должен подобрать пассажиров по пути.
+//Сначала фильтрую этажи в здании на которых есть пассажиры и которым по пути с направлением лифта и эти этажи ближе
+//чем высадка из лифта и затем беру ближайший этаж из этого списка.
     public Floor findFloorForPickUp () {
         List<Floor> floors = lift.building.getFloors();
-        PriorityQueue<Person> priorityQueue = lift.getLoader().getPriorityQueue();
+        PriorityQueue<Person> passengersQueue = lift.getLoader().getPassengers();
         if (lift.getCondition()== UP) {
             floors = floors.stream()
-                    .filter(floor -> (floor.getNumberFloor() < priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() > lift.getNumberFloor()))
+                    .filter(floor -> (floor.getNumberFloor() < passengersQueue.peek().getDesiredFloor() && floor.getNumberFloor() > lift.getNumberFloor()))
                     .collect(Collectors.toList());
         } else if (lift.getCondition().equals(Condition.DOWN)) {
             floors = floors.stream()
-                    .filter(floor -> (floor.getNumberFloor() > priorityQueue.peek().getDesiredFloor() && floor.getNumberFloor() < lift.getNumberFloor()))
+                    .filter(floor -> (floor.getNumberFloor() > passengersQueue.peek().getDesiredFloor() && floor.getNumberFloor() < lift.getNumberFloor()))
                     .collect(Collectors.toList());
             Collections.reverse(floors);
         } else {
@@ -62,7 +65,7 @@ public class ManagerLift {
     }
 
         public int findNumberFloorForUnload(){
-        return lift.getLoader().getPriorityQueue().peek().getDesiredFloor();
+        return lift.getLoader().getPassengers().peek().getDesiredFloor();
     }
 }
 
